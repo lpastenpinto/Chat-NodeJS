@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat!</title>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    function signup() {
+      alert("lleego");
+      $.ajax({
+        type: "POST",
+        url: '/signup',
+        data: $('#signup-form').serialize(),
+        success: function (data) {
+          $('#msg').empty();
+          if (data.error) {
+            $('#msg').append(data.err.msg);
+          }
+          else {
+            $('#msg').append('User registered successfully');
+            $('#signup-form')[0].reset();
+            window.location = '/';
+          }
+        },
+        dataType: 'json'
+      });
+    }
+    
+  </script>
+</head>
+<body>
+  <div class="container">
+   
+    <div class="row">
+
+      <div class="col-md-7 col-md-offset-2">
+        <h1> Bienvenido. Registrese en nuestro Chat!</h1>
+        <form id="signup-form"  class="form" role="form">
+          <div class="form-group">
+            <label for="username">Nombre de Usuario</label>
+            <input id="username" name="username" placeholder="Escriba su nombre de usuario" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+          <input id="password" name="password" placeholder="Escriba su contraseña" type="password" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Ingrese su mail" type="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+              <button onclick="signup()" type="button" class="btn btn-primary">Registrarse</button>
+          </div>            
+        </form>
+      </div>  
+    <br><span id="msg"></span>
+    </div>
+  
+  </div>  
+</body>
+</html>
